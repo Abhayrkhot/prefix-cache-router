@@ -98,19 +98,3 @@ tests, simply execute:
 ```bash
 pytest
 ```
-
-## What I learned
-
-* **Prefix cache reuse** is effective when prompts share identical prefixes,
-  reducing prefill compute【239421193071328†L60-L83】.
-* **Cache‑aware routing** improves utilisation by sending similar requests to
-  the same worker【239421193071328†L115-L126】.
-* **Hit rate and load distribution** are important metrics for evaluating
-  routing strategies.
-
-## Resume bullet
-
-> Implemented a prefix cache aware router simulator that routes requests with
-> identical prefixes to maximise KV cache reuse, tracks hit/miss statistics
-> and load distribution, and provides a simulation tool for analysing cache
-> hit rates under different request patterns.
