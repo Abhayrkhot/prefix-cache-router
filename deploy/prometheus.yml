@@ -1,0 +1,7 @@
+global:
+  scrape_interval: 5s
+scrape_configs:
+  - job_name: pcrouter
+    static_configs: [{targets: ["router:8080"]}]
+  - job_name: workers  # vLLM-compatible metric names (vllm:prefix_cache_hits_total, ...)
+    static_configs: [{targets: ["worker-0:8000", "worker-1:8000", "worker-2:8000"]}]

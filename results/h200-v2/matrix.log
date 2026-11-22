@@ -1,0 +1,8 @@
+conversation_x4        ttft           ttft p50   0.246 p99    1.12 | tpot p50   12.2 ms | hit 0.323 engine 0.314 | slo 1.000 | failed 0 | lag p99 69.9 ms | 461s
+conversation_x4        affinity       ttft p50   0.257 p99    1.24 | tpot p50   12.6 ms | hit 0.309 engine 0.301 | slo 1.000 | failed 0 | lag p99 67.6 ms | 461s
+conversation_x5        ttft           ttft p50   0.316 p99    1.33 | tpot p50   20.6 ms | hit 0.322 engine 0.314 | slo 1.000 | failed 0 | lag p99 68.4 ms | 374s
+conversation_x5        affinity       ttft p50   0.344 p99    1.44 | tpot p50   23.2 ms | hit 0.302 engine 0.294 | slo 0.999 | failed 0 | lag p99 68.8 ms | 374s
+toolagent_x4           ttft           ttft p50   0.169 p99    1.00 | tpot p50   12.1 ms | hit 0.599 engine 0.593 | slo 1.000 | failed 0 | lag p99 96.5 ms | 461s
+toolagent_x4           affinity       ttft p50   0.148 p99    1.04 | tpot p50   12.8 ms | hit 0.594 engine 0.589 | slo 1.000 | failed 0 | lag p99 102.0 ms | 461s
+toolagent_x5           ttft           ttft p50   0.234 p99    1.16 | tpot p50   19.9 ms | hit 0.599 engine 0.593 | slo 1.000 | failed 0 | lag p99 101.3 ms | 374s
+toolagent_x5           affinity       ttft p50   0.213 p99    1.24 | tpot p50   21.5 ms | hit 0.592 engine 0.587 | slo 1.000 | failed 0 | lag p99 103.0 ms | 374s

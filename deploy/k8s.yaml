@@ -1,0 +1,44 @@
+# pcrouter in front of a vLLM StatefulSet (one pod per replica, stable DNS names).
+# vLLM must run with --enable-prompt-tokens-details (cached-token feedback) and, to let
+# /admin/reset clear caches between experiments, VLLM_SERVER_DEV_MODE=1.
+apiVersion: v1
+kind: ConfigMap
+metadata: {name: pcrouter}
+data:
+  PCROUTER_WORKERS: "http://vllm-0.vllm:8000,http://vllm-1.vllm:8000,http://vllm-2.vllm:8000,http://vllm-3.vllm:8000"
+  PCROUTER_POLICY: ttft
+  PCROUTER_STEP_MODEL: h200-qwen2.5-7b
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: pcrouter}
+spec:
+  replicas: 1  # one router owns the cache model; see README "Limitations" before scaling out
+  selector: {matchLabels: {app: pcrouter}}
+  template:
+    metadata:
+      labels: {app: pcrouter}
+      annotations: {prometheus.io/scrape: "true", prometheus.io/port: "8080"}
+    spec:
+      containers:
+        - name: pcrouter
+          image: ghcr.io/abhayrkhot/pcrouter:0.2.0
+          args: ["serve", "--port", "8080"]
+          envFrom: [{configMapRef: {name: pcrouter}}]
+          env:  # /admin/* needs this bearer token (without it, loopback clients only)
+            - name: PCROUTER_ADMIN_TOKEN
+              valueFrom: {secretKeyRef: {name: pcrouter-admin, key: token, optional: true}}
+          ports: [{containerPort: 8080, name: http}]
+          readinessProbe: {httpGet: {path: /health, port: http}, periodSeconds: 5}
+          livenessProbe: {httpGet: {path: /health, port: http}, periodSeconds: 10, failureThreshold: 6}
+          resources:
+            requests: {cpu: "1", memory: 512Mi}
+            limits: {memory: 2Gi}
+          securityContext: {runAsNonRoot: true, readOnlyRootFilesystem: true, allowPrivilegeEscalation: false}
+---
+apiVersion: v1
+kind: Service
+metadata: {name: pcrouter}
+spec:
+  selector: {app: pcrouter}
+  ports: [{port: 80, targetPort: http, name: http}]
