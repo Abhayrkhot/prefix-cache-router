@@ -1,0 +1,32 @@
+{
+ "meta": {
+  "max_input_len": 30720,
+  "max_output_len": 2048
+ },
+ "rows": [
+  {
+   "trace": "conversation",
+   "requests": 11089,
+   "duration_s": 3536.999,
+   "rate": 3.1351436627491274,
+   "input_mean": 8429.567769862026,
+   "input_p99": 29104.24,
+   "output_mean": 337.5195238524664,
+   "prompt_tok_per_s": 26427.905973397224,
+   "unique_tokens": 57523504,
+   "ideal_hit_ratio": 0.38372879338181926
+  },
+  {
+   "trace": "toolagent",
+   "requests": 22775,
+   "duration_s": 3536.999,
+   "rate": 6.439074480937089,
+   "input_mean": 6944.622217343578,
+   "input_p99": 27579.199999999968,
+   "output_mean": 172.2251152579583,
+   "prompt_tok_per_s": 44716.93969944578,
+   "unique_tokens": 58777120,
+   "ideal_hit_ratio": 0.6272820594294
+  }
+ ]
+}
